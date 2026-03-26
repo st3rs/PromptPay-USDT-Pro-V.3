@@ -84,7 +84,7 @@ export function OrderHistoryPage() {
                     <tr key={order.id} className="hover:bg-neutral-50 transition-colors">
                       <td className="px-6 py-4 font-medium">#{order.id.slice(-6)}</td>
                       <td className="px-6 py-4">{formatCurrency(order.thbAmount)}</td>
-                      <td className="px-6 py-4 font-medium text-emerald-600">{formatNumber(order.usdtAmount)} USDT</td>
+                      <td className="px-6 py-4 font-medium text-blue-600">{formatNumber(order.usdtAmount)} USDT</td>
                       <td className="px-6 py-4">
                         <Badge variant="secondary">{order.network}</Badge>
                       </td>

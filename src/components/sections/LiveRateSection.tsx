@@ -44,7 +44,7 @@ export function LiveRateSection() {
             <div className="grid md:grid-cols-3">
               <div className="p-8 border-b md:border-b-0 md:border-r border-neutral-800">
                 <div className="flex items-center gap-2 text-neutral-400 text-xs font-bold uppercase tracking-wider mb-4">
-                  <TrendingUp className="w-4 h-4 text-emerald-500" />
+                  <TrendingUp className="w-4 h-4 text-blue-500" />
                   {t("landing.live_rate")}
                 </div>
                 <div className="text-4xl font-bold text-white mb-2">

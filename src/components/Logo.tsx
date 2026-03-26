@@ -31,10 +31,10 @@ export function Logo({ className, iconSize = "md", textSize = "xl" }: LogoProps)
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <div className={cn("bg-black rounded-lg flex items-center justify-center shrink-0", iconSizes[iconSize])}>
-        <div className={cn("bg-emerald-400 rounded-sm rotate-45", innerIconSizes[iconSize])} />
+        <div className={cn("bg-blue-400 rounded-sm rotate-45", innerIconSizes[iconSize])} />
       </div>
-      <span className={cn("font-bold tracking-tight text-black", textSizes[textSize])}>
-        PromptPay<span className="text-emerald-600">USDT</span>
+      <span className={cn("font-display font-bold tracking-tight text-black", textSizes[textSize])}>
+        PromptPay<span className="text-primary">USDT</span>
       </span>
     </div>
   );

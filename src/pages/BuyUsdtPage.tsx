@@ -184,7 +184,7 @@ export function BuyUsdtPage() {
                 <div className="flex justify-between items-end">
                   <span className="text-sm text-neutral-400">{t("orders.you_receive")}</span>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-emerald-400">{formatNumber(finalUsdt)}</div>
+                    <div className="text-2xl font-bold text-blue-400">{formatNumber(finalUsdt)}</div>
                     <div className="text-xs text-neutral-500">USDT</div>
                   </div>
                 </div>
@@ -194,11 +194,11 @@ export function BuyUsdtPage() {
 
           <div className="space-y-4 px-2">
             <div className="flex items-center gap-3 text-sm text-neutral-500">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <ShieldCheck className="w-4 h-4 text-blue-600" />
               <span>{t("landing.security_notice")}</span>
             </div>
             <div className="flex items-center gap-3 text-sm text-neutral-500">
-              <Zap className="w-4 h-4 text-emerald-600" />
+              <Zap className="w-4 h-4 text-blue-600" />
               <span>{t("landing.instant_verification")}</span>
             </div>
           </div>

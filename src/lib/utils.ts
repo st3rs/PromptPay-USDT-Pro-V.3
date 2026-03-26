@@ -42,7 +42,7 @@ export function getStatusColor(status: string) {
     case "USDT_SENT":
       return "bg-indigo-100 text-indigo-700 border-indigo-200";
     case "COMPLETED":
-      return "bg-emerald-100 text-emerald-700 border-emerald-200";
+      return "bg-blue-100 text-blue-700 border-blue-200";
     case "REJECTED":
     case "EXPIRED":
       return "bg-rose-100 text-rose-700 border-rose-200";

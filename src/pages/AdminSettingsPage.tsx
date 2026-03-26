@@ -222,86 +222,110 @@ export function AdminSettingsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-black">Admin: Settings</h1>
-        <p className="text-neutral-500">Configure bank accounts and exchange rates</p>
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-200 pb-6">
+        <div>
+          <h1 className="text-3xl font-display font-bold tracking-tight text-neutral-900 uppercase">System Configuration</h1>
+          <p className="text-neutral-500 font-serif italic text-sm">Adjust network parameters, liquidity settings, and banking infrastructure.</p>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-400 uppercase tracking-widest bg-neutral-50 px-3 py-1 border border-neutral-100">
+          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+          System Status: Operational
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Fee Settings */}
         <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
+          <Card className="rounded-none border-neutral-200 shadow-none">
+            <CardHeader className="border-b border-neutral-100 bg-neutral-50/30">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-indigo-600" />
-                    Fee & Network Settings
+                  <CardTitle className="text-xs font-serif italic uppercase tracking-widest text-neutral-500 flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-blue-600" />
+                    Protocol Fees & Network Parameters
                   </CardTitle>
-                  <CardDescription>Adjust service fees and network withdrawal costs</CardDescription>
                 </div>
-                <Button onClick={handleSaveFeeSettings} isLoading={isSaving} className="w-full sm:w-auto">
-                  <Save className="w-4 h-4 mr-2" />
-                  Save All Fees
+                <Button onClick={handleSaveFeeSettings} isLoading={isSaving} className="w-full sm:w-auto rounded-none font-mono text-[10px] uppercase tracking-widest h-9">
+                  <Save className="w-3.5 h-3.5 mr-2" />
+                  Commit Changes
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="space-y-4 p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                  <div className="flex items-center gap-2 text-sm font-bold text-neutral-700">
-                    <Badge variant="outline" className="bg-white">TRC20</Badge>
-                    Network Fee (USDT)
+                <div className="space-y-4 p-5 bg-neutral-50 border border-neutral-200 relative overflow-hidden group">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-neutral-300 group-hover:bg-blue-500 transition-colors" />
+                  <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                    <span>TRC20 Network</span>
+                    <Badge variant="outline" className="rounded-none border-neutral-200 bg-white text-[9px]">TRON</Badge>
                   </div>
-                  <Input 
-                    type="number"
-                    step="0.1"
-                    value={feeSettings.NETWORK_FEE_TRC20}
-                    onChange={(e) => setFeeSettings({ ...feeSettings, NETWORK_FEE_TRC20: e.target.value })}
-                  />
-                  <p className="text-[10px] text-neutral-500 italic">Standard fee for Tron network</p>
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-neutral-700 uppercase tracking-tight">Withdrawal Fee (USDT)</label>
+                    <Input 
+                      type="number"
+                      step="0.1"
+                      className="rounded-none border-neutral-300 font-mono focus-visible:ring-0 focus-visible:border-blue-500"
+                      value={feeSettings.NETWORK_FEE_TRC20}
+                      onChange={(e) => setFeeSettings({ ...feeSettings, NETWORK_FEE_TRC20: e.target.value })}
+                    />
+                  </div>
+                  <p className="text-[10px] text-neutral-400 italic font-serif">Fixed cost per outbound transaction</p>
                 </div>
 
-                <div className="space-y-4 p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                  <div className="flex items-center gap-2 text-sm font-bold text-neutral-700">
-                    <Badge variant="outline" className="bg-white">ERC20</Badge>
-                    Network Fee (USDT)
+                <div className="space-y-4 p-5 bg-neutral-50 border border-neutral-200 relative overflow-hidden group">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-neutral-300 group-hover:bg-blue-500 transition-colors" />
+                  <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                    <span>ERC20 Network</span>
+                    <Badge variant="outline" className="rounded-none border-neutral-200 bg-white text-[9px]">ETH</Badge>
                   </div>
-                  <Input 
-                    type="number"
-                    step="0.1"
-                    value={feeSettings.NETWORK_FEE_ERC20}
-                    onChange={(e) => setFeeSettings({ ...feeSettings, NETWORK_FEE_ERC20: e.target.value })}
-                  />
-                  <p className="text-[10px] text-neutral-500 italic">Standard fee for Ethereum network</p>
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-neutral-700 uppercase tracking-tight">Withdrawal Fee (USDT)</label>
+                    <Input 
+                      type="number"
+                      step="0.1"
+                      className="rounded-none border-neutral-300 font-mono focus-visible:ring-0 focus-visible:border-blue-500"
+                      value={feeSettings.NETWORK_FEE_ERC20}
+                      onChange={(e) => setFeeSettings({ ...feeSettings, NETWORK_FEE_ERC20: e.target.value })}
+                    />
+                  </div>
+                  <p className="text-[10px] text-neutral-400 italic font-serif">Variable gas-adjusted baseline</p>
                 </div>
 
-                <div className="space-y-4 p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                  <div className="flex items-center gap-2 text-sm font-bold text-neutral-700">
-                    <Badge variant="outline" className="bg-white">BEP20</Badge>
-                    Network Fee (USDT)
+                <div className="space-y-4 p-5 bg-neutral-50 border border-neutral-200 relative overflow-hidden group">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-neutral-300 group-hover:bg-blue-500 transition-colors" />
+                  <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                    <span>BEP20 Network</span>
+                    <Badge variant="outline" className="rounded-none border-neutral-200 bg-white text-[9px]">BSC</Badge>
                   </div>
-                  <Input 
-                    type="number"
-                    step="0.1"
-                    value={feeSettings.NETWORK_FEE_BEP20}
-                    onChange={(e) => setFeeSettings({ ...feeSettings, NETWORK_FEE_BEP20: e.target.value })}
-                  />
-                  <p className="text-[10px] text-neutral-500 italic">Standard fee for BSC network</p>
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-neutral-700 uppercase tracking-tight">Withdrawal Fee (USDT)</label>
+                    <Input 
+                      type="number"
+                      step="0.1"
+                      className="rounded-none border-neutral-300 font-mono focus-visible:ring-0 focus-visible:border-blue-500"
+                      value={feeSettings.NETWORK_FEE_BEP20}
+                      onChange={(e) => setFeeSettings({ ...feeSettings, NETWORK_FEE_BEP20: e.target.value })}
+                    />
+                  </div>
+                  <p className="text-[10px] text-neutral-400 italic font-serif">Optimized BSC smart chain cost</p>
                 </div>
 
-                <div className="space-y-4 p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
-                  <div className="flex items-center gap-2 text-sm font-bold text-emerald-800">
-                    <TrendingUp className="w-4 h-4" />
-                    Service Fee (%)
+                <div className="space-y-4 p-5 bg-blue-50/30 border border-blue-200 relative overflow-hidden group">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-blue-500" />
+                  <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-blue-600">
+                    <span>Global Service Fee</span>
+                    <TrendingUp className="w-3.5 h-3.5" />
                   </div>
-                  <Input 
-                    type="number"
-                    step="0.1"
-                    value={feeSettings.SERVICE_FEE_PERCENT}
-                    onChange={(e) => setFeeSettings({ ...feeSettings, SERVICE_FEE_PERCENT: e.target.value })}
-                  />
-                  <p className="text-[10px] text-emerald-600 italic">Platform profit margin per order</p>
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-blue-900 uppercase tracking-tight">Platform Margin (%)</label>
+                    <Input 
+                      type="number"
+                      step="0.1"
+                      className="rounded-none border-blue-200 font-mono focus-visible:ring-0 focus-visible:border-blue-500 bg-white"
+                      value={feeSettings.SERVICE_FEE_PERCENT}
+                      onChange={(e) => setFeeSettings({ ...feeSettings, SERVICE_FEE_PERCENT: e.target.value })}
+                    />
+                  </div>
+                  <p className="text-[10px] text-blue-600/70 italic font-serif">Applied to all THB/USDT conversions</p>
                 </div>
               </div>
             </CardContent>
@@ -310,33 +334,35 @@ export function AdminSettingsPage() {
 
         {/* Bank Accounts */}
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold flex items-center gap-2">
-              <Building2 className="w-5 h-5 text-blue-600" />
-              Bank Accounts
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
+            <h2 className="text-xs font-serif italic uppercase tracking-widest text-neutral-500 flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-blue-600" />
+              Banking Infrastructure
             </h2>
-            <Button size="sm" variant="outline" onClick={() => setIsAddingBank(!isAddingBank)}>
-              <Plus className="w-4 h-4 mr-2" />
-              {isAddingBank ? "Cancel" : "Add Bank"}
+            <Button size="sm" variant="ghost" onClick={() => setIsAddingBank(!isAddingBank)} className="h-8 rounded-none font-mono text-[10px] uppercase tracking-widest border border-neutral-200">
+              <Plus className="w-3.5 h-3.5 mr-2" />
+              {isAddingBank ? "Abort" : "Initialize New"}
             </Button>
           </div>
 
           {isAddingBank && (
-            <Card className="border-emerald-200 bg-emerald-50/30">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm">New Bank Account</CardTitle>
+            <Card className="rounded-none border-blue-200 bg-blue-50/20 shadow-none">
+              <CardHeader className="pb-3 border-b border-blue-100">
+                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-blue-600">New Account Entry</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-4">
                 <form onSubmit={handleAddBank} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Input 
                       label="Bank Name" 
+                      className="rounded-none font-mono text-xs"
                       value={newBank.bankName} 
                       onChange={(e) => setNewBank({ ...newBank, bankName: e.target.value })}
                       required
                     />
                     <Input 
                       label="Account Name" 
+                      className="rounded-none font-mono text-xs"
                       value={newBank.accountName} 
                       onChange={(e) => setNewBank({ ...newBank, accountName: e.target.value })}
                       required
@@ -344,12 +370,13 @@ export function AdminSettingsPage() {
                   </div>
                   <Input 
                     label="Account Number" 
+                    className="rounded-none font-mono text-xs"
                     value={newBank.accountNumber} 
                     onChange={(e) => setNewBank({ ...newBank, accountNumber: e.target.value })}
                     required
                   />
-                  <Button type="submit" className="w-full" isLoading={isSaving}>
-                    Create Account
+                  <Button type="submit" className="w-full rounded-none font-mono text-[10px] uppercase tracking-widest" isLoading={isSaving}>
+                    Commit to Database
                   </Button>
                 </form>
               </CardContent>
@@ -357,66 +384,69 @@ export function AdminSettingsPage() {
           )}
 
           {bankAccounts.map((bank) => (
-            <Card key={bank.id}>
+            <Card key={bank.id} className="rounded-none border-neutral-200 shadow-none group relative overflow-hidden">
+              <div className={cn("absolute top-0 left-0 w-1 h-full transition-colors", bank.isActive ? "bg-blue-500" : "bg-neutral-300")} />
               <CardContent className="pt-6 space-y-4">
                 <div className="flex items-center justify-between">
-                  <Badge variant={bank.isActive ? "success" : "secondary"}>
-                    {bank.isActive ? "Active" : "Inactive"}
+                  <Badge className={cn("rounded-none text-[9px] uppercase tracking-widest font-bold px-2 py-0.5", bank.isActive ? "bg-blue-100 text-blue-700 border-blue-200" : "bg-neutral-100 text-neutral-500 border-neutral-200")}>
+                    {bank.isActive ? "ACTIVE_NODE" : "OFFLINE"}
                   </Badge>
-                  <Button variant="ghost" size="sm" className="text-rose-600" onClick={() => setBankToDelete(bank.id)}>
-                    <Trash2 className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" className="text-rose-600 hover:bg-rose-50 rounded-none h-7 w-7 p-0" onClick={() => setBankToDelete(bank.id)}>
+                    <Trash2 className="w-3.5 h-3.5" />
                   </Button>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input 
                     label="Bank Name" 
+                    className="rounded-none font-mono text-xs border-neutral-200"
                     defaultValue={bank.bankName} 
                     onBlur={(e) => handleUpdateBank(bank.id, { bankName: e.target.value })}
                   />
                   <Input 
                     label="Account Name" 
+                    className="rounded-none font-mono text-xs border-neutral-200"
                     defaultValue={bank.accountName} 
                     onBlur={(e) => handleUpdateBank(bank.id, { accountName: e.target.value })}
                   />
                 </div>
                 <Input 
                   label="Account Number" 
+                  className="rounded-none font-mono text-xs border-neutral-200"
                   defaultValue={bank.accountNumber} 
                   onBlur={(e) => handleUpdateBank(bank.id, { accountNumber: e.target.value })}
                 />
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 pt-2">
                   <input 
                     type="checkbox" 
                     checked={bank.isActive} 
                     onChange={(e) => handleUpdateBank(bank.id, { isActive: e.target.checked })}
-                    className="w-4 h-4 rounded border-neutral-300 text-black focus:ring-black"
+                    className="w-4 h-4 rounded-none border-neutral-300 text-blue-600 focus:ring-0"
                   />
-                  <span className="text-sm font-medium">Set as Active Account</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">Enable as primary gateway</span>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Exchange Rates */}
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-emerald-600" />
-              Exchange Rates
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
+            <h2 className="text-xs font-serif italic uppercase tracking-widest text-neutral-500 flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-blue-600" />
+              Liquidity & Exchange Rates
             </h2>
-            <Button size="sm" variant="outline" onClick={() => setIsAddingRate(!isAddingRate)}>
-              <Plus className="w-4 h-4 mr-2" />
-              {isAddingRate ? "Cancel" : "Add Manual Rate"}
+            <Button size="sm" variant="ghost" onClick={() => setIsAddingRate(!isAddingRate)} className="h-8 rounded-none font-mono text-[10px] uppercase tracking-widest border border-neutral-200">
+              <Plus className="w-3.5 h-3.5 mr-2" />
+              {isAddingRate ? "Abort" : "Manual Override"}
             </Button>
           </div>
 
           {isAddingRate && (
-            <Card className="border-emerald-200 bg-emerald-50/30">
-              <CardHeader>
-                <CardTitle className="text-sm">New Manual Rate</CardTitle>
+            <Card className="rounded-none border-blue-200 bg-blue-50/20 shadow-none">
+              <CardHeader className="pb-3 border-b border-blue-100">
+                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-blue-600">New Market Pair</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-4">
                 <form 
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -426,13 +456,16 @@ export function AdminSettingsPage() {
                 >
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <Input 
-                      label="Currency Pair (e.g. BTC/THB)" 
+                      label="Currency Pair" 
+                      className="rounded-none font-mono text-xs"
+                      placeholder="BTC/THB"
                       value={newRate.pair} 
                       onChange={(e) => setNewRate({ ...newRate, pair: e.target.value })}
                       required
                     />
                     <Input 
-                      label="Rate" 
+                      label="Rate Value" 
+                      className="rounded-none font-mono text-xs"
                       type="number"
                       step="0.000001"
                       value={newRate.rate} 
@@ -440,20 +473,20 @@ export function AdminSettingsPage() {
                       required
                     />
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-neutral-700">Source</label>
+                      <label className="text-[10px] font-mono uppercase tracking-widest text-neutral-500">Data Source</label>
                       <select 
                         value={newRate.source}
                         onChange={(e) => setNewRate({ ...newRate, source: e.target.value })}
-                        className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex h-10 w-full rounded-none border border-neutral-200 bg-white px-3 py-2 text-xs font-mono ring-offset-white focus-visible:outline-none focus-visible:ring-0 focus-visible:border-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <option value="MANUAL">MANUAL</option>
-                        <option value="BITKUB">BITKUB</option>
-                        <option value="BINANCE">BINANCE</option>
+                        <option value="MANUAL">MANUAL_ENTRY</option>
+                        <option value="BITKUB">BITKUB_API</option>
+                        <option value="BINANCE">BINANCE_API</option>
                       </select>
                     </div>
                   </div>
-                  <Button type="submit" className="w-full" isLoading={isSaving}>
-                    Save Rate
+                  <Button type="submit" className="w-full rounded-none font-mono text-[10px] uppercase tracking-widest" isLoading={isSaving}>
+                    Inject Rate
                   </Button>
                 </form>
               </CardContent>
@@ -461,22 +494,24 @@ export function AdminSettingsPage() {
           )}
 
           {exchangeRates.map((rate) => (
-            <Card key={rate.id}>
-              <CardHeader>
-                <CardTitle className="text-base flex items-center justify-between">
-                  {rate.pair} Rate
-                  <Badge variant={rate.source === "MANUAL" ? "warning" : "success"}>
+            <Card key={rate.id} className="rounded-none border-neutral-200 shadow-none group relative overflow-hidden">
+              <div className={cn("absolute top-0 left-0 w-1 h-full transition-colors", rate.source === "MANUAL" ? "bg-amber-500" : "bg-blue-500")} />
+              <CardHeader className="pb-3 border-b border-neutral-50">
+                <CardTitle className="text-[11px] font-mono uppercase tracking-widest flex items-center justify-between">
+                  <span className="font-bold">{rate.pair}</span>
+                  <Badge className={cn("rounded-none text-[9px] uppercase tracking-widest font-bold px-2 py-0.5", rate.source === "MANUAL" ? "bg-amber-100 text-amber-700 border-amber-200" : "bg-blue-100 text-blue-700 border-blue-200")}>
                     {rate.source}
                   </Badge>
                 </CardTitle>
-                <CardDescription>Last updated: {formatDate(rate.updatedAt, "en")}</CardDescription>
+                <CardDescription className="text-[10px] font-serif italic">Last sync: {formatDate(rate.updatedAt, "en")}</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="pt-4 space-y-4">
                 <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4">
                   <div className="w-full sm:flex-1">
                     <Input 
                       id={`rate-${rate.id}`}
                       label={`Rate (1 ${rate.pair.split('/')[0] || 'Base'} = ? ${rate.pair.split('/')[1] || 'Quote'})`} 
+                      className="rounded-none font-mono text-xs border-neutral-200"
                       type="number" 
                       step="0.000001"
                       defaultValue={rate.rate}
@@ -489,45 +524,45 @@ export function AdminSettingsPage() {
                       disabled={rate.source === "BITKUB"}
                     />
                   </div>
-                  {rate.source === "MANUAL" && (
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    {rate.source === "MANUAL" && (
+                      <Button 
+                        variant="ghost" 
+                        className="flex-1 sm:flex-none rounded-none border border-neutral-200 h-10 px-4 font-mono text-[10px] uppercase tracking-widest hover:bg-blue-600 hover:text-white"
+                        isLoading={isSaving}
+                        onClick={() => {
+                          const input = document.getElementById(`rate-${rate.id}`) as HTMLInputElement;
+                          if (input) {
+                            setRateUpdateConfirm({ id: rate.id, pair: rate.pair, rate: parseFloat(input.value), source: rate.source, isNew: false });
+                          }
+                        }}
+                      >
+                        Update
+                      </Button>
+                    )}
                     <Button 
-                      variant="primary" 
-                      size="md" 
-                      className="w-full sm:w-auto"
+                      variant="ghost" 
+                      className="flex-1 sm:flex-none rounded-none border border-neutral-200 h-10 px-4 font-mono text-[10px] uppercase tracking-widest hover:bg-neutral-900 hover:text-white"
                       isLoading={isSaving}
                       onClick={() => {
-                        const input = document.getElementById(`rate-${rate.id}`) as HTMLInputElement;
-                        if (input) {
-                          setRateUpdateConfirm({ id: rate.id, pair: rate.pair, rate: parseFloat(input.value), source: rate.source, isNew: false });
-                        }
+                        const newSource = rate.source === "MANUAL" ? "BITKUB" : "MANUAL";
+                        setRateUpdateConfirm({ id: rate.id, pair: rate.pair, rate: rate.rate, source: newSource, isNew: false });
                       }}
                     >
-                      <Save className="w-4 h-4 mr-2" />
-                      Save
+                      {rate.source === "MANUAL" ? "Sync API" : "Override"}
                     </Button>
-                  )}
-                  <Button 
-                    variant="outline" 
-                    size="md" 
-                    isLoading={isSaving}
-                    onClick={() => {
-                      const newSource = rate.source === "MANUAL" ? "BITKUB" : "MANUAL";
-                      setRateUpdateConfirm({ id: rate.id, pair: rate.pair, rate: rate.rate, source: newSource, isNew: false });
-                    }}
-                  >
-                    Switch to {rate.source === "MANUAL" ? "Bitkub" : "Manual"}
-                  </Button>
+                  </div>
                 </div>
                 {rate.source === "BITKUB" && (
-                  <div className="bg-blue-50 border border-blue-100 p-3 rounded-lg text-xs text-blue-700 flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4" />
-                    This rate is automatically synced with Bitkub API. Switch to Manual to override.
+                  <div className="bg-blue-50/50 border border-blue-100 p-3 rounded-none text-[10px] font-mono text-blue-700 flex items-center gap-2">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    SYNC_ACTIVE: BITKUB_API_STREAM
                   </div>
                 )}
                 {rate.source === "MANUAL" && (
-                  <div className="bg-amber-50 border border-amber-100 p-3 rounded-lg text-xs text-amber-700 flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4" />
-                    Using manual rate. Switch to Bitkub to resume automatic syncing.
+                  <div className="bg-amber-50/50 border border-amber-100 p-3 rounded-none text-[10px] font-mono text-amber-700 flex items-center gap-2">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    OVERRIDE_ACTIVE: MANUAL_MODE
                   </div>
                 )}
               </CardContent>
@@ -570,7 +605,7 @@ export function AdminSettingsPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-neutral-500">New Rate:</span>
-              <span className="text-sm font-bold text-emerald-600">{rateUpdateConfirm?.rate}</span>
+              <span className="text-sm font-bold text-blue-600">{rateUpdateConfirm?.rate}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-neutral-500">Source:</span>

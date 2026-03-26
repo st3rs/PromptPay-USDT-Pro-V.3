@@ -122,10 +122,10 @@ export function AdminUsersPage() {
             <h3 className="text-2xl font-bold text-black">{stats.customers}</h3>
           </CardContent>
         </Card>
-        <Card className="bg-emerald-50 border-emerald-100">
+        <Card className="bg-blue-50 border-blue-100">
           <CardContent className="pt-6">
-            <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-1">New This Month</p>
-            <h3 className="text-2xl font-bold text-emerald-700">+{stats.newThisMonth}</h3>
+            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">New This Month</p>
+            <h3 className="text-2xl font-bold text-blue-700">+{stats.newThisMonth}</h3>
           </CardContent>
         </Card>
       </div>
@@ -144,8 +144,8 @@ export function AdminUsersPage() {
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left min-w-[600px] md:min-w-full">
-              <thead className="text-xs text-neutral-500 uppercase bg-neutral-50">
+            <table className="w-full text-sm text-left min-w-[600px] md:min-w-full border-collapse">
+              <thead className="text-[11px] font-serif italic uppercase tracking-wider text-neutral-400 bg-neutral-50/50 border-y border-neutral-100">
                 <tr>
                   <th className="px-6 py-4 font-medium">User</th>
                   <th className="px-6 py-4 font-medium">Role</th>
@@ -157,44 +157,44 @@ export function AdminUsersPage() {
               <tbody className="divide-y divide-neutral-100">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-neutral-400">
-                      Loading...
+                    <td colSpan={5} className="px-6 py-12 text-center text-neutral-400 font-mono">
+                      LOADING_USERS...
                     </td>
                   </tr>
                 ) : filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-neutral-400">
-                      No users found
+                    <td colSpan={5} className="px-6 py-12 text-center text-neutral-400 font-mono">
+                      NO_USERS_FOUND
                     </td>
                   </tr>
                 ) : (
                   filteredUsers.map((user) => (
-                    <tr key={user.id} className="hover:bg-neutral-50 transition-colors">
+                    <tr key={user.id} className="group hover:bg-neutral-900 hover:text-white transition-all duration-200 cursor-pointer border-b border-neutral-50">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-neutral-100 rounded-full flex items-center justify-center shrink-0">
-                            <UserIcon className="w-4 h-4 text-neutral-500" />
+                          <div className="w-8 h-8 rounded-none bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs font-mono group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0">
+                            {user.name.charAt(0).toUpperCase()}
                           </div>
                           <div className="flex flex-col">
-                            <span className="font-medium text-black truncate max-w-[120px] sm:max-w-none">{user.name}</span>
-                            <span className="text-xs text-neutral-400 truncate max-w-[120px] sm:max-w-none">{user.email}</span>
+                            <span className="font-bold truncate max-w-[120px] sm:max-w-none">{user.name}</span>
+                            <span className="text-[10px] opacity-50 font-mono uppercase tracking-tighter truncate max-w-[120px] sm:max-w-none">{user.email}</span>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <Badge variant={user.role === "ADMIN" ? "destructive" : "secondary"} className="text-[10px] sm:text-xs">
+                        <Badge variant={user.role === "ADMIN" ? "destructive" : "secondary"} className="text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-none">
                           {user.role}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 text-neutral-500 hidden sm:table-cell">{formatDate(user.createdAt, locale)}</td>
-                      <td className="px-6 py-4 hidden lg:table-cell">{user._count?.orders || 0}</td>
+                      <td className="px-6 py-4 font-mono text-xs opacity-50 hidden sm:table-cell">{formatDate(user.createdAt, locale)}</td>
+                      <td className="px-6 py-4 font-mono text-xs hidden lg:table-cell">{user._count?.orders || 0}</td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex justify-end gap-2">
                           <Button 
-                            variant="outline" 
+                            variant="ghost" 
                             size="sm" 
-                            className="h-8 text-xs sm:text-sm px-2 sm:px-3"
-                            onClick={() => handleUpdateRole(user.id, user.role === "ADMIN" ? "CUSTOMER" : "ADMIN")}
+                            className="h-8 text-[10px] font-bold uppercase tracking-widest px-2 sm:px-3 rounded-none border border-transparent group-hover:border-white/20 group-hover:text-white"
+                            onClick={(e) => { e.stopPropagation(); handleUpdateRole(user.id, user.role === "ADMIN" ? "CUSTOMER" : "ADMIN"); }}
                           >
                             <Shield className="w-3.5 h-3.5 sm:mr-2" />
                             <span className="hidden sm:inline">{user.role === "ADMIN" ? "Make Customer" : "Make Admin"}</span>
@@ -202,8 +202,8 @@ export function AdminUsersPage() {
                           <Button 
                             variant="ghost" 
                             size="sm" 
-                            className="h-8 w-8 p-0 text-rose-600"
-                            onClick={() => setUserToDelete(user.id)}
+                            className="h-8 w-8 p-0 text-rose-600 hover:bg-rose-600 hover:text-white rounded-none"
+                            onClick={(e) => { e.stopPropagation(); setUserToDelete(user.id); }}
                             disabled={user._count?.orders > 0}
                           >
                             <Trash2 className="w-4 h-4" />

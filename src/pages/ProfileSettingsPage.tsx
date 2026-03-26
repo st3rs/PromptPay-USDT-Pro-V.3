@@ -111,7 +111,7 @@ export function ProfileSettingsPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {success && (
-                  <div className="bg-emerald-50 border border-emerald-100 text-emerald-600 p-3 rounded-lg text-sm flex items-center gap-2">
+                  <div className="bg-blue-50 border border-blue-100 text-blue-600 p-3 rounded-lg text-sm flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />
                     {success}
                   </div>

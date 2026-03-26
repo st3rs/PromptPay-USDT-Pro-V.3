@@ -22,6 +22,7 @@ export function AdminOrderDetailPage() {
   const [adminNote, setAdminNote] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showUsdtSentModal, setShowUsdtSentModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -182,7 +183,7 @@ export function AdminOrderDetailPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                <ShieldCheck className="w-5 h-5 text-blue-600" />
                 Admin Actions
               </CardTitle>
               <CardDescription>Update order status and add transaction details</CardDescription>
@@ -227,7 +228,7 @@ export function AdminOrderDetailPage() {
                 {["PAYMENT_UPLOADED", "UNDER_REVIEW"].includes(order.status) && (
                   <Button 
                     variant="primary" 
-                    className="bg-emerald-600 hover:bg-emerald-700"
+                    className="bg-blue-600 hover:bg-blue-700"
                     onClick={() => updateStatus("APPROVED")}
                     isLoading={isUpdating}
                   >
@@ -239,7 +240,7 @@ export function AdminOrderDetailPage() {
                   <Button 
                     variant="primary" 
                     className="bg-indigo-600 hover:bg-indigo-700"
-                    onClick={() => updateStatus("USDT_SENT")}
+                    onClick={() => setShowUsdtSentModal(true)}
                     isLoading={isUpdating}
                     disabled={!txHash}
                   >
@@ -250,7 +251,7 @@ export function AdminOrderDetailPage() {
                 {order.status === "USDT_SENT" && (
                   <Button 
                     variant="primary" 
-                    className="bg-emerald-600 hover:bg-emerald-700 flex-1 sm:flex-none"
+                    className="bg-blue-600 hover:bg-blue-700 flex-1 sm:flex-none"
                     onClick={() => updateStatus("COMPLETED")}
                     isLoading={isUpdating}
                   >
@@ -395,7 +396,7 @@ export function AdminOrderDetailPage() {
                 <div className="flex justify-between items-end">
                   <span className="text-sm text-neutral-400">USDT to Send</span>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-emerald-400">{formatNumber(order.finalUSDT || order.estimatedUSDT)}</div>
+                    <div className="text-2xl font-bold text-blue-400">{formatNumber(order.finalUSDT || order.estimatedUSDT)}</div>
                     <div className="text-xs text-neutral-500">USDT</div>
                   </div>
                 </div>
@@ -416,6 +417,54 @@ export function AdminOrderDetailPage() {
         }
       >
         <p className="text-neutral-600">Are you sure you want to delete this order? This action cannot be undone.</p>
+      </Modal>
+
+      <Modal 
+        isOpen={showUsdtSentModal} 
+        onClose={() => setShowUsdtSentModal(false)} 
+        title="Confirm USDT Sent"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setShowUsdtSentModal(false)}>Cancel</Button>
+            <Button 
+              variant="primary" 
+              className="bg-indigo-600 hover:bg-indigo-700"
+              onClick={async () => {
+                await updateStatus("USDT_SENT");
+                setShowUsdtSentModal(false);
+              }} 
+              isLoading={isUpdating}
+            >
+              Confirm Sent
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="text-sm text-amber-800">
+              <p className="font-bold mb-1">Verification Required</p>
+              <p>Please verify that you have successfully sent <strong>{formatNumber(order.finalUSDT || order.estimatedUSDT)} USDT</strong> to the customer's wallet address on the <strong>{order.network}</strong> network.</p>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Customer Wallet Address</p>
+            <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-100 font-mono text-xs break-all">
+              {order.walletAddress}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Transaction Hash (TxID)</p>
+            <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-100 font-mono text-xs break-all">
+              {txHash}
+            </div>
+          </div>
+
+          <p className="text-sm text-neutral-600">By clicking confirm, the customer will be notified that their USDT has been sent.</p>
+        </div>
       </Modal>
     </div>
   );

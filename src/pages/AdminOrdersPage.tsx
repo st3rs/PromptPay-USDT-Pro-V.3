@@ -122,7 +122,7 @@ export function AdminOrdersPage() {
             <p className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1">Total Volume (Completed)</p>
             <div className="flex items-end justify-between">
               <h3 className="text-2xl font-bold text-white">{formatCurrency(stats.totalVolume)}</h3>
-              <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20">THB</Badge>
+              <Badge variant="secondary" className="bg-blue-500/10 text-blue-400 border-blue-500/20">THB</Badge>
             </div>
           </CardContent>
         </Card>
@@ -167,7 +167,7 @@ export function AdminOrdersPage() {
                   className={cn(
                     "px-4 py-3 text-sm font-medium transition-all border-b-2 -mb-px flex-shrink-0",
                     activeTab === tab.id 
-                      ? "border-emerald-500 text-emerald-600" 
+                      ? "border-blue-500 text-blue-600" 
                       : "border-transparent text-neutral-400 hover:text-neutral-600"
                   )}
                 >
@@ -179,8 +179,8 @@ export function AdminOrdersPage() {
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left min-w-[800px] md:min-w-full">
-              <thead className="text-xs text-neutral-500 uppercase bg-neutral-50">
+            <table className="w-full text-sm text-left min-w-[800px] md:min-w-full border-collapse">
+              <thead className="text-[11px] font-serif italic uppercase tracking-wider text-neutral-400 bg-neutral-50/50 border-y border-neutral-100">
                 <tr>
                   <th className="px-6 py-4 font-medium">Order ID</th>
                   <th className="px-6 py-4 font-medium">Customer</th>
@@ -194,48 +194,48 @@ export function AdminOrdersPage() {
               <tbody className="divide-y divide-neutral-100">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={7} className="px-6 py-12 text-center text-neutral-400">
-                      Loading...
+                    <td colSpan={7} className="px-6 py-12 text-center text-neutral-400 font-mono">
+                      LOADING_DATA...
                     </td>
                   </tr>
                 ) : filteredOrders.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-6 py-12 text-center text-neutral-400">
-                      No orders found
+                    <td colSpan={7} className="px-6 py-12 text-center text-neutral-400 font-mono">
+                      NO_ORDERS_FOUND
                     </td>
                   </tr>
                 ) : (
                   filteredOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-neutral-50 transition-colors">
-                      <td className="px-6 py-4 font-medium">#{order.id.slice(-6)}</td>
+                    <tr key={order.id} className="group hover:bg-neutral-900 hover:text-white transition-all duration-200 cursor-pointer border-b border-neutral-50">
+                      <td className="px-6 py-4 font-mono text-xs">#{order.id.slice(-6)}</td>
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
-                          <span className="font-medium text-black">{order.user.name}</span>
-                          <span className="text-xs text-neutral-400 hidden sm:inline">{order.user.email}</span>
+                          <span className="font-bold">{order.user.name}</span>
+                          <span className="text-[10px] opacity-50 font-mono uppercase tracking-tighter hidden sm:inline">{order.user.email}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 font-mono">
                         <div className="flex flex-col">
                           <span>{formatCurrency(order.amountTHB)}</span>
-                          <span className="text-xs text-emerald-600 font-medium sm:hidden">
+                          <span className="text-[10px] text-blue-500 font-bold sm:hidden group-hover:text-blue-400">
                             {formatNumber(order.finalUSDT || order.estimatedUSDT)} USDT
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 font-medium text-emerald-600 hidden sm:table-cell">
+                      <td className="px-6 py-4 font-mono font-bold text-blue-600 group-hover:text-blue-400 hidden sm:table-cell">
                         {formatNumber(order.finalUSDT || order.estimatedUSDT)} USDT
                       </td>
                       <td className="px-6 py-4">
-                        <Badge className={cn("border text-[10px] sm:text-xs px-1.5 py-0.5 sm:px-2 sm:py-1", getStatusColor(order.status))}>
+                        <Badge className={cn("border text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-none", getStatusColor(order.status))}>
                           {t(`orders.status_${order.status.toLowerCase()}`)}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 text-neutral-500 hidden lg:table-cell">{formatDate(order.createdAt, locale)}</td>
+                      <td className="px-6 py-4 font-mono text-xs opacity-50 hidden lg:table-cell">{formatDate(order.createdAt, locale)}</td>
                       <td className="px-6 py-4 text-right">
                         <Link to={`/admin/orders/${order.id}`}>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3 sm:py-1">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-4 sm:py-1 rounded-none border border-transparent group-hover:border-white/20 group-hover:text-white">
                             <Eye className="w-4 h-4 sm:mr-2" />
-                            <span className="hidden sm:inline">Review</span>
+                            <span className="hidden sm:inline uppercase text-[10px] font-bold tracking-widest">Review</span>
                           </Button>
                         </Link>
                       </td>

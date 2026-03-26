@@ -121,16 +121,16 @@ export function OrderDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Payment Instructions */}
           {isPendingPayment && (
-            <Card className="border-emerald-200 bg-emerald-50/30">
+            <Card className="border-blue-200 bg-blue-50/30">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <QrCode className="w-5 h-5 text-emerald-600" />
+                  <QrCode className="w-5 h-5 text-blue-600" />
                   {t("orders.payment_instructions")}
                 </CardTitle>
                 <CardDescription>{t("orders.payment_subtitle")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-white rounded-2xl border border-emerald-100 shadow-sm">
+                <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-white rounded-2xl border border-blue-100 shadow-sm">
                   <div className="w-40 h-40 sm:w-48 sm:h-48 bg-neutral-100 rounded-lg flex items-center justify-center mb-4">
                     {/* Placeholder for QR Code */}
                     <QrCode className="w-24 h-24 sm:w-32 sm:h-32 text-neutral-300" />
@@ -170,12 +170,12 @@ export function OrderDetailPage() {
                     </Button>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-emerald-600 text-white rounded-xl shadow-md gap-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-blue-600 text-white rounded-xl shadow-md gap-3">
                     <div>
                       <p className="text-[10px] sm:text-xs opacity-80 uppercase tracking-wider font-bold">{t("orders.total_amount")}</p>
                       <p className="text-lg sm:text-xl font-bold">{formatCurrency(order.thbAmount)}</p>
                     </div>
-                    <Button variant="ghost" size="sm" className="text-white hover:bg-emerald-500 h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3 sm:py-1" onClick={() => copyToClipboard(order.thbAmount.toString())}>
+                    <Button variant="ghost" size="sm" className="text-white hover:bg-blue-500 h-8 w-8 p-0 sm:h-auto sm:w-auto sm:px-3 sm:py-1" onClick={() => copyToClipboard(order.thbAmount.toString())}>
                       <Copy className="w-4 h-4" />
                     </Button>
                   </div>
@@ -256,10 +256,10 @@ export function OrderDetailPage() {
               {order.txHash && (
                 <div className="pt-6 border-t border-neutral-100">
                   <p className="text-xs text-neutral-500 mb-2">{t("orders.tx_hash")}</p>
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg border border-emerald-100">
-                    <code className="text-xs font-mono break-all text-emerald-800">{order.txHash}</code>
+                  <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
+                    <code className="text-xs font-mono break-all text-blue-800">{order.txHash}</code>
                     <a href={`https://tronscan.org/#/transaction/${order.txHash}`} target="_blank" rel="noreferrer">
-                      <Button variant="ghost" size="sm" className="text-emerald-600">
+                      <Button variant="ghost" size="sm" className="text-blue-600">
                         <ExternalLink className="w-4 h-4" />
                       </Button>
                     </a>
@@ -292,7 +292,7 @@ export function OrderDetailPage() {
                 <div className="flex justify-between items-end">
                   <span className="text-sm text-neutral-400">{t("orders.you_receive")}</span>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-emerald-400">{formatNumber(order.usdtAmount)}</div>
+                    <div className="text-2xl font-bold text-blue-400">{formatNumber(order.usdtAmount)}</div>
                     <div className="text-xs text-neutral-500">USDT</div>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export function OrderDetailPage() {
               ].map((step, i) => (
                 <div key={i} className="flex gap-3">
                   <div className="flex flex-col items-center">
-                    <div className={cn("w-2.5 h-2.5 rounded-full", step.active ? "bg-emerald-500" : "bg-neutral-200")} />
+                    <div className={cn("w-2.5 h-2.5 rounded-full", step.active ? "bg-blue-500" : "bg-neutral-200")} />
                     {i < 3 && <div className="w-0.5 flex-1 bg-neutral-100 my-1" />}
                   </div>
                   <div>
