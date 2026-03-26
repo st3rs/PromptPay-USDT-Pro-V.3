@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  AWAITING_PAYMENT
+  PAYMENT_UPLOADED
+  UNDER_REVIEW
+  APPROVED
+  USDT_SENT
+  COMPLETED
+  REJECTED
+  EXPIRED
+}
+
+enum Network {
+  TRC20
+  ERC20
+  BEP20
+}
+
+enum PaymentMethod {
+  PROMPTPAY
+  BANK_TRANSFER
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  password      String
+  name          String?
+  role          Role           @default(CUSTOMER)
+  orders        Order[]
+  adminActions  AdminAction[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Order {
+  id              String        @id @default(cuid())
+  orderNumber     String        @unique
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  customerName    String
+  email           String
+  phone           String
+  amountTHB       Float
+  exchangeRate    Float
+  serviceFeeTHB   Float
+  networkFeeUSDT  Float
+  estimatedUSDT   Float
+  finalUSDT       Float?
+  walletAddress   String
+  network         Network
+  paymentMethod   PaymentMethod
+  status          OrderStatus   @default(PENDING)
+  customerNote    String?
+  adminNote       String?
+  txHash          String?
+  proofImageUrl   String?
+  expiresAt       DateTime
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  adminActions    AdminAction[]
+}
+
+model BankAccount {
+  id            String   @id @default(cuid())
+  bankName      String
+  accountNumber String   @unique
+  accountName   String
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ExchangeRate {
+  id            String   @id @default(cuid())
+  pair          String   @unique // e.g., "USDT/THB"
+  rate          Float
+  source        String   @default("MANUAL") // MANUAL, BITKUB
+  updatedAt     DateTime @updatedAt
+}
+
+model AppSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  type        String   @default("string") // string, boolean, number, json
+  isSecret    Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
+}
+
+model AdminAction {
+  id        String   @id @default(cuid())
+  adminId   String
+  admin     User     @relation(fields: [adminId], references: [id])
+  orderId   String?
+  order     Order?   @relation(fields: [orderId], references: [id])
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+}
