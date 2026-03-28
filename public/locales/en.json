@@ -17,6 +17,7 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "loading": "Loading...",
+    "back": "Back",
     "th": "Thai",
     "en": "English"
   },
@@ -72,5 +73,12 @@
     "user_id_required": "User ID is required",
     "rate_positive": "Exchange rate must be positive",
     "fee_nonnegative": "Fee cannot be negative"
+  },
+  "errors": {
+    "email_exists": "This email is already registered",
+    "invalid_credentials": "Invalid email or password",
+    "server_error": "An unexpected error occurred. Please try again.",
+    "registration_failed": "Registration failed. Please try again.",
+    "login_failed": "Login failed. Please try again."
   }
 }

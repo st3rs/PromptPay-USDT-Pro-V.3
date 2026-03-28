@@ -43,7 +43,8 @@ export function RegisterPage() {
     setIsLoading(true);
     setError(null);
     try {
-      await registerUser(data);
+      const { confirmPassword: _, ...registerData } = data;
+      await registerUser(registerData);
       navigate("/dashboard");
     } catch (err: any) {
       setError(err.message);
@@ -146,7 +147,7 @@ export function RegisterPage() {
             transition={{ delay: 0.6 }}
             className="text-sm text-center text-neutral-500"
           >
-            {t("auth.has_account")}{" "}
+            {t("auth.have_account")}{" "}
             <Link to="/login" className="text-black font-semibold hover:underline">
               {t("common.login")}
             </Link>
