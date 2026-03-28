@@ -60,20 +60,24 @@ const isAdmin = (req: any, res: any, next: any) => {
 app.post("/api/auth/register", async (req, res) => {
   const { email, password, name } = req.body;
   try {
+    if (!email || !password || !name) {
+      return res.status(400).json({ message: "errors.registration_failed" });
+    }
+
     const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) return res.status(400).json({ message: "Email already exists" });
+    if (existing) return res.status(400).json({ message: "errors.email_exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: { email, password: hashedPassword, name, role: "CUSTOMER" },
     });
 
-    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET);
+    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
     const { password: _, ...userWithoutPassword } = user;
     res.json({ user: userWithoutPassword, token });
   } catch (err) {
     console.error("Registration error:", err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "errors.server_error" });
   }
 });
 
@@ -81,16 +85,20 @@ app.post("/api/auth/register", async (req, res) => {
 app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
+    if (!email || !password) {
+      return res.status(400).json({ message: "errors.invalid_credentials" });
     }
 
-    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET);
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ message: "errors.invalid_credentials" });
+    }
+
+    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
     const { password: _, ...userWithoutPassword } = user;
     res.json({ user: userWithoutPassword, token });
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "errors.server_error" });
   }
 });
 
@@ -462,7 +470,15 @@ app.delete("/api/admin/orders/:id", authenticate, isAdmin, async (req: any, res)
 app.get("/api/admin/users", authenticate, isAdmin, async (req, res) => {
   try {
     const users = await prisma.user.findMany({
-      include: { _count: { select: { orders: true } } },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+        _count: { select: { orders: true } },
+      },
       orderBy: { createdAt: "desc" },
     });
     res.json(users);

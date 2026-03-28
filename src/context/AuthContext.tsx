@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, AuthResponse, LoginInput, RegisterInput } from "@/src/lib/validation";
 
+type RegisterPayload = Omit<RegisterInput, "confirmPassword">;
+
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isLoading: boolean;
   login: (data: LoginInput) => Promise<void>;
-  register: (data: RegisterInput) => Promise<void>;
+  register: (data: RegisterPayload) => Promise<void>;
   logout: () => void;
 }
 
@@ -44,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("user", JSON.stringify(user));
   };
 
-  const register = async (data: RegisterInput) => {
+  const register = async (data: RegisterPayload) => {
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
