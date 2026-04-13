@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { AuthProvider, useAuth } from "@/src/context/AuthContext";
 import { I18nProvider } from "@/src/context/I18nContext";
 import { Layout } from "@/src/components/Layout";
@@ -96,6 +97,7 @@ export default function App() {
 
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          <Analytics />
         </Router>
       </AuthProvider>
     </I18nProvider>
